@@ -118,6 +118,70 @@ E le seguenti righe alla fine del file `style.css`:
 
 Salviamo i file e vediamo come cambia la pagina HTML. Se non ci sono errori il canvas rettangolare apparirà a schermo.
 
+## TuxMath 2: la bolla con l'operazione dentro
+
+Vediamo adesso come disegnare una bolla all'interno del nostro Canvas. Per fare questo dovremo modificare il file con il codice javascript `main.js`.
+
+Togliamo la linea che stampa la stringa dimostrativa con il comando `console.log` e inseriamo codice che segue.
+
+Per prima cosa inseriamo la parte noiosa ma che ci servirà nel seguito: definiamo i colori che useremo per disegnare gli oggetti (copiare i valori dal foglio di stile):
+
+```js
+const base03color  = "#002b36";
+const base02color  = "#073642";
+const base01color  = "#586e75";
+const base00color  = "#657b83";
+const base0color   = "#839496";
+const base1color   = "#93a1a1";
+const base2color   = "#eee8d5";
+const base3color   = "#fdf6e3";
+const yellowcolor  = "#b58900";
+const orangecolor  = "#cb4b16";
+const redcolor     = "#dc322f";
+const magentacolor = "#d33682";
+const violetcolor  = "#6c71c4";
+const bluecolor    = "#268bd2";
+const cyancolor    = "#2aa198";
+const greencolor   = "#859900";
+```
+
+Quindi prendiamo il riferimento al contesto 2D del canvas e definiamo alcune variabili che ci torneranno utili nel seguito:
+
+```js
+var canvas = document.getElementById('tuxmathcanvas');
+var ctx = canvas.getContext('2d');
+var circlecolor = redcolor;
+var textcolor = base02color;
+ctx.font = `25px Verdana`;
+ctx.textAlign = "center";
+ctx.textBaseline = "middle";
+```
+
+Quindi disegniamo un cerchio:
+
+```js
+ctx.beginPath();
+ctx.strokeStyle = circlecolor;
+ctx.fillStyle = circlecolor;
+ctx.arc(150, 100, 50, 0, 2 * Math.PI, false)
+ctx.fill();
+ctx.stroke();
+```
+
+E quindi il testo all'interno del cerchio:
+
+```js
+ctx.fillStyle = textcolor;
+var op = "4 + 5";
+var txtwidth = ctx.measureText(op).width
+ctx.fillText(op, 150, 100);
+```
+
+Buona parte delle istruzioni che abbiamo inserito, effettuano una serie di operazioni sul contesto "2D" del canvas. Per un riferimento su tutto quello che è possibile fare su un canvas si possono andare a vedere le guide che si trovano su internet (le risorse per i linguaggi HTML e Javascript non mancano!). Noi per esempio abbiamo usato molto la [sezione sulle canvas][w3schoolsCanvas] della guida [w3schools.com].
+
+Per scrivere del testo sul canvas si p
+
+
 
 ## TO BE COMPLETED
 
@@ -131,3 +195,5 @@ Salviamo i file e vediamo come cambia la pagina HTML. Se non ci sono errori il c
 [Yarn]: https://yarnpkg.com/lang/en/
 [NodeJS]: https://nodejs.org/en/
 [jsmodernsetup]: https://fpiantini.github.io/javascript/nodejs/programming/webpack/web/2019/04/01/nodejs-project-modern-setup.html
+[w3schools.com]: https://www.w3schools.com/
+[w3schoolsCanvas]: https://www.w3schools.com/tags/ref_canvas.asp
