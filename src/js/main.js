@@ -36,7 +36,7 @@ setInterval(function() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.rect(0,0,canvas.width,canvas.height, base3color);
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = base3color;
     ctx.fill();
     ctx.stroke();
 

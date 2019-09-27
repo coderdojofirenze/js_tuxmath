@@ -185,7 +185,7 @@ Il codice realizzato fino ad adesso viene eseguito tutte le volte che carichiamo
 
 Per realizzare il nostro gioco dobbiamo però realizzare un'animazione (le bolle che cadono dall'alto verso il basso), e quindi dobbiamo essere in grado di chiamare codice continuamente: per esempio dovremo cancellare e disegnare di nuovo la nostra bolla un po' più in basso e così via.
 
-Dobbiamo quindi trovare il modo di chiamare il nostro codice continuamente. Per fare questo possiamo utilizzare la funzione JavaScript `setInterval()`: questa funzione chiama una funzione o valuta un'espressione continuamente con un periodo in millisecondi specificato come argomento.
+Dobbiamo quindi trovare il modo di chiamare il nostro codice periodicamente. Per fare questo possiamo utilizzare la funzione JavaScript `setInterval()`: questo metodo chiama una funzione o valuta un'espressione continuamente con un periodo in millisecondi specificato come argomento.
 
 Per esempio, aggiungendo il seguente codice al nostro file `main.js`:
 
@@ -210,7 +210,7 @@ In questa linea abbiamo utilizzato una sintassi speciale di Javascript: la [**st
 
 ## TuxMath 3: Animiamo la bolla!
 
-Adesso che abbiamo a disposizione la potenza della funzione `setInterval()` facciamoci qualcosa di più interessante.
+Adesso che abbiamo a disposizione la potenza della funzione `setInterval()` facciamoci qualcosa di più interessante che stampare del testo sulla console.
 
 In particolare vediamo come creare l'animazione di una bolla che scende dall'alto verso il basso.
 
@@ -250,7 +250,7 @@ setInterval(function() {
     // ripuliamo il canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
-    ctx.rect(0,0,canvas.width,canvas.height, base3color);
+    ctx.rect(0, 0, canvas.width, canvas.height, base3color);
     ctx.fillStyle = 'white';
     ctx.fill();
     ctx.stroke();
