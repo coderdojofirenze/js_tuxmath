@@ -30,16 +30,6 @@ var center_y = -50;
 var op = '4 + 5';
 var txtwidth = ctx.measureText(op).width
 
-ctx.beginPath();
-ctx.strokeStyle = circlecolor;
-ctx.fillStyle = circlecolor;
-ctx.arc(center_x, center_y, 50, 0, 2 * Math.PI, false);
-ctx.fill();
-ctx.stroke();
-
-ctx.fillStyle = textcolor;
-ctx.fillText(op, center_x, center_y);
-
 setInterval(function() {
 
     // ripuliamo il canvas
@@ -50,9 +40,6 @@ setInterval(function() {
     ctx.fill();
     ctx.stroke();
 
-    // calcoliamo la nuova posizione
-    center_y += 1;
-
     // ridisegniamo il tutto
     ctx.beginPath();
     ctx.strokeStyle = circlecolor;
@@ -62,6 +49,9 @@ setInterval(function() {
     ctx.stroke();
     ctx.fillStyle = textcolor;
     ctx.fillText(op, center_x, center_y);
+
+    // calcoliamo la nuova posizione che verrà utilizzata al prossimo ciclo
+    center_y += 1;
 
 
 }, 10);

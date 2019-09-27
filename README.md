@@ -218,42 +218,42 @@ In pratica dobbiamo utilizzare due variabili per salvare la posizione della boll
 
 Per fare questo modifichiamo il nostro codice in questo modo:
 
-Per prima cosa definiamo due variabili che contengano la posizione del centro della bolla e inizializzamoli con i valori `150` e `-25` e utilizziamo queste variabili per disegnare bolla e testo. Modifichiamo quindi il codice che disegna bolla e testo nel seguente modo:
+Per prima cosa definiamo due variabili che contengano la posizione del centro della bolla e inizializzamoli con i valori `150` e `-25` e utilizziamo queste variabili per disegnare bolla e testo. Spostiamo poi le definizioni delle variabili op e txtwidth:
 
 ```javascript
 var center_x = 150;  // <<< Codice nuovo >>>
 var center_y = -50;  // <<< Codice nuovo >>>
 var op = '4 + 5';    // <<< riga spostata>>>
 var txtwidth = ctx.measureText(op).width   // <<< riga spostata >>>
-
-ctx.beginPath();
-ctx.strokeStyle = circlecolor;
-ctx.fillStyle = circlecolor;
-ctx.arc(center_x, center_y, 50, 0, 2 * Math.PI, false); // <<< riga modificata>>>
-ctx.fill();
-ctx.stroke();
-
-ctx.fillStyle = textcolor;
-ctx.fillText(op, center_x, center_y);  // <<< riga modificata >>>
 ```
 
-Dopo questa modifica quando la pagina verrà ricaricata la bolla e il testo saranno scomparsi. Infatti avendo messo come ordinata un numero negativo, gli oggetti sono disegnati fuori dal canvas nella parte superiore (ricordiamoci che l'origine degli assi (il punto 0,0) sta in alto a sinistra, che le ascisse aumentano andando da sinistra a destra e le ordinate andando da destra a sinistra).
+Spostiamo quindi il codice che disegna bolla e testo dentro la funzione `setInterval()` aggiungendoci anche una sezione che ripulisce il canvas a ogni iterazione e la riga che modifica il valore di `center_x` in modo ad ogni iterazione gli oggetti vengano disegnati un po' più in basso.
 
-E adesso per far "cadere" la bolla non ci resta che inserire il seguente codice all'interno della funzione `setInterval()` (dopo aver tolto il codice dimostrativo inserito in precedenza):
+Alla fine di tutte queste operazioni il nostro codice (a parte le righe iniziali con la definizione dei colori che rimangono uguali) sarà diventato il seguente:
 
 ```javascript
+var canvas = document.getElementById('tuxmathcanvas');
+var ctx = canvas.getContext('2d');
+var circlecolor = redcolor;
+var textcolor = base02color;
+ctx.font = '25px Verdana';
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+
+var center_x = 150;
+var center_y = -50;
+var op = '4 + 5';
+var txtwidth = ctx.measureText(op).width
+
 setInterval(function() {
 
     // ripuliamo il canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
-    ctx.rect(0, 0, canvas.width, canvas.height, base3color);
+    ctx.rect(0,0,canvas.width,canvas.height, base3color);
     ctx.fillStyle = 'white';
     ctx.fill();
     ctx.stroke();
-
-    // calcoliamo la nuova posizione
-    center_y += 1;
 
     // ridisegniamo il tutto
     ctx.beginPath();
@@ -265,14 +265,17 @@ setInterval(function() {
     ctx.fillStyle = textcolor;
     ctx.fillText(op, center_x, center_y);
 
+    // calcoliamo la nuova posizione che verrà utilizzata al prossimo ciclo
+    center_y += 1;
+
 
 }, 10);
 ```
 
-Provare per credere!
+Dopo questa modifica quando la pagina verrà ricaricata la bolla e il testo saranno inizialmente scomparsi, ma ben presto appariranno nella parte alta dello schermo per scendere verso il basso. Per capire questo comportamente bisogna anche tenere presente che in un canvas l'origine degli assi (il punto [0,0]) sta nell'angolo in alto a sinistra, che le ascisse aumentano andando da sinistra a destra e le ordinate andando dall'alto verso il basso.
 
+Provare a ricaricare la pagina per credere!
 
-## TO BE COMPLETED
 
 
 
