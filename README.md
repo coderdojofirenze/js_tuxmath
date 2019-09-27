@@ -152,7 +152,7 @@ var canvas = document.getElementById('tuxmathcanvas');
 var ctx = canvas.getContext('2d');
 var circlecolor = redcolor;
 var textcolor = base02color;
-ctx.font = `25px Verdana`;
+ctx.font = '25px Verdana';
 ctx.textAlign = "center";
 ctx.textBaseline = "middle";
 ```
@@ -177,9 +177,36 @@ var txtwidth = ctx.measureText(op).width
 ctx.fillText(op, 150, 100);
 ```
 
-Buona parte delle istruzioni che abbiamo inserito, effettuano una serie di operazioni sul contesto "2D" del canvas. Per un riferimento su tutto quello che è possibile fare su un canvas si possono andare a vedere le guide che si trovano su internet (le risorse per i linguaggi HTML e Javascript non mancano!). Noi per esempio abbiamo usato molto la [sezione sulle canvas][w3schoolsCanvas] della guida [w3schools.com].
+Buona parte delle istruzioni che abbiamo inserito, effettuano una serie di operazioni sul contesto "2D" del canvas. Per un riferimento su tutto quello che è possibile fare su un canvas si possono andare a vedere le guide che si trovano su internet (le risorse per i linguaggi HTML e Javascript non mancano!). In questo caso abbiamo usato la [sezione sulle canvas][w3schoolsCanvas] della guida [w3schools.com], ma il sito probabilmente più importante per chi sviluppa pagine web è la guida agli sviluppatori della Mozilla Foundation ([MDN web docs][MDNwebdocs]), molto completa e in parte disponibile anche in italiano.
 
-Per scrivere del testo sul canvas si p
+## Come ripetere un'operazione periodicamente
+
+Il codice realizzato fino ad adesso viene eseguito tutte le volte che carichiamo la pagina, ma una volta che tutte le istruzioni sono state eseguite il programma termina.
+
+Per realizzare il nostro gioco dobbiamo però realizzare un'animazione (le bolle che cadono dall'alto verso il basso), e quindi dobbiamo essere in grado di chiamare codice continuamente: per esempio dovremo cancellare e disegnare di nuovo la nostra bolla un po' più in basso e così via.
+
+Dobbiamo quindi trovare il modo di chiamare il nostro codice continuamente. Per fare questo possiamo utilizzare la funzione JavaScript `setInterval()`: questa funzione chiama una funzione o valuta un'espressione continuamente con un periodo in millisecondi specificato come argomento.
+
+Per esempio, aggiungendo il seguente codice al nostro file `main.js`:
+
+```javascript
+var ndx = 0;
+setInterval(function() {
+    console.log(`setInterval(): iterazione numero ${ndx}`);
+    ndx += 1;
+
+}, 1000);
+```
+
+creiamo una funzione  che viene chiamata una volta al secondo (1000 millisecondi = 1 secondo) e che scrive una linea sulla console. Per vedere il funzionamento di questo programma occorre aprire i Developers Tool premendo il tasto F12.
+
+Notare la linea:
+
+```javascript
+    console.log(`setInterval(): iterazione numero ${ndx}`);
+```
+
+In questa linea abbiamo utilizzato una sintassi speciale di Javascript: la [**stringa template**][StringTemplate]. Le stringhe template si riconoscono perché per definirle non si usano gli apici normali (o i doppi apici) ma i "backtick" (l'accento grave). All'interno della stringa template si possono inserire delle variabili contenute all'interno della sequenza `${}`. Nel nostro caso, per stampare all'interno della stringa il contatore `ndx`, basta usare la sintassi `${ndx}`
 
 
 
@@ -195,5 +222,7 @@ Per scrivere del testo sul canvas si p
 [Yarn]: https://yarnpkg.com/lang/en/
 [NodeJS]: https://nodejs.org/en/
 [jsmodernsetup]: https://fpiantini.github.io/javascript/nodejs/programming/webpack/web/2019/04/01/nodejs-project-modern-setup.html
+[MDNwebdocs]: https://developer.mozilla.org/it/
 [w3schools.com]: https://www.w3schools.com/
 [w3schoolsCanvas]: https://www.w3schools.com/tags/ref_canvas.asp
+[stringTemplate]: https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/template_strings
