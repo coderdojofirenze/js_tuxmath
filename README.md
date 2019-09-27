@@ -163,7 +163,7 @@ Quindi disegniamo un cerchio:
 ctx.beginPath();
 ctx.strokeStyle = circlecolor;
 ctx.fillStyle = circlecolor;
-ctx.arc(150, 100, 50, 0, 2 * Math.PI, false)
+ctx.arc(150, 100, 50, 0, 2 * Math.PI, false);
 ctx.fill();
 ctx.stroke();
 ```
@@ -208,6 +208,68 @@ Notare la linea:
 
 In questa linea abbiamo utilizzato una sintassi speciale di Javascript: la [**stringa template**][StringTemplate]. Le stringhe template si riconoscono perché per definirle non si usano gli apici normali (o i doppi apici) ma i "backtick" (l'accento grave). All'interno della stringa template si possono inserire delle variabili contenute all'interno della sequenza `${}`. Nel nostro caso, per stampare all'interno della stringa il contatore `ndx`, basta usare la sintassi `${ndx}`
 
+## TuxMath 3: Animiamo la bolla!
+
+Adesso che abbiamo a disposizione la potenza della funzione `setInterval()` facciamoci qualcosa di più interessante.
+
+In particolare vediamo come creare l'animazione di una bolla che scende dall'alto verso il basso.
+
+In pratica dobbiamo utilizzare due variabili per salvare la posizione della bolla, e ad ogni iterazione ripulare il canvas e disegnare nuovamente la bolla un pochino più in basso.
+
+Per fare questo modifichiamo il nostro codice in questo modo:
+
+Per prima cosa definiamo due variabili che contengano la posizione del centro della bolla e inizializzamoli con i valori `150` e `-25` e utilizziamo queste variabili per disegnare bolla e testo. Modifichiamo quindi il codice che disegna bolla e testo nel seguente modo:
+
+```javascript
+var center_x = 150;  // <<< Codice nuovo >>>
+var center_y = -50;  // <<< Codice nuovo >>>
+var op = '4 + 5';    // <<< riga spostata>>>
+var txtwidth = ctx.measureText(op).width   // <<< riga spostata >>>
+
+ctx.beginPath();
+ctx.strokeStyle = circlecolor;
+ctx.fillStyle = circlecolor;
+ctx.arc(center_x, center_y, 50, 0, 2 * Math.PI, false); // <<< riga modificata>>>
+ctx.fill();
+ctx.stroke();
+
+ctx.fillStyle = textcolor;
+ctx.fillText(op, center_x, center_y);  // <<< riga modificata >>>
+```
+
+Dopo questa modifica quando la pagina verrà ricaricata la bolla e il testo saranno scomparsi. Infatti avendo messo come ordinata un numero negativo, gli oggetti sono disegnati fuori dal canvas nella parte superiore (ricordiamoci che l'origine degli assi (il punto 0,0) sta in alto a sinistra, che le ascisse aumentano andando da sinistra a destra e le ordinate andando da destra a sinistra).
+
+E adesso per far "cadere" la bolla non ci resta che inserire il seguente codice all'interno della funzione `setInterval()` (dopo aver tolto il codice dimostrativo inserito in precedenza):
+
+```javascript
+setInterval(function() {
+
+    // ripuliamo il canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.rect(0, 0, canvas.width, canvas.height, base3color);
+    ctx.fillStyle = 'white';
+    ctx.fill();
+    ctx.stroke();
+
+    // calcoliamo la nuova posizione
+    center_y += 1;
+
+    // ridisegniamo il tutto
+    ctx.beginPath();
+    ctx.strokeStyle = circlecolor;
+    ctx.fillStyle = circlecolor;
+    ctx.arc(center_x, center_y, 50, 0, 2 * Math.PI, false);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = textcolor;
+    ctx.fillText(op, center_x, center_y);
+
+
+}, 10);
+```
+
+Provare per credere!
 
 
 ## TO BE COMPLETED

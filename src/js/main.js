@@ -25,21 +25,43 @@ ctx.font = '25px Verdana';
 ctx.textAlign = 'center';
 ctx.textBaseline = 'middle';
 
+var center_x = 150;
+var center_y = -50;
+var op = '4 + 5';
+var txtwidth = ctx.measureText(op).width
+
 ctx.beginPath();
 ctx.strokeStyle = circlecolor;
 ctx.fillStyle = circlecolor;
-ctx.arc(150, 100, 50, 0, 2 * Math.PI, false)
+ctx.arc(center_x, center_y, 50, 0, 2 * Math.PI, false);
 ctx.fill();
 ctx.stroke();
 
 ctx.fillStyle = textcolor;
-var op = '4 + 5';
-var txtwidth = ctx.measureText(op).width
-ctx.fillText(op, 150, 100);
+ctx.fillText(op, center_x, center_y);
 
-var ndx = 0;
 setInterval(function() {
-    console.log(`setInterval(): iterazione numero ${ndx}`);
-    ndx += 1;
 
-}, 1000);
+    // ripuliamo il canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.rect(0,0,canvas.width,canvas.height, base3color);
+    ctx.fillStyle = 'white';
+    ctx.fill();
+    ctx.stroke();
+
+    // calcoliamo la nuova posizione
+    center_y += 1;
+
+    // ridisegniamo il tutto
+    ctx.beginPath();
+    ctx.strokeStyle = circlecolor;
+    ctx.fillStyle = circlecolor;
+    ctx.arc(center_x, center_y, 50, 0, 2 * Math.PI, false);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = textcolor;
+    ctx.fillText(op, center_x, center_y);
+
+
+}, 10);
