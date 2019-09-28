@@ -276,7 +276,147 @@ Dopo questa modifica quando la pagina verrà ricaricata la bolla e il testo sara
 
 Provare a ricaricare la pagina per credere!
 
+## Un po' di "refactoring"
 
+Dopo questa fase di sviluppo un po' selvaggio, i tempi sono maturi per fare un'operazione tipica dei pro: un po' di **refactoring** del codice. Questo per prepararci a introdurre le nuove funzionalità più facilmente.
+
+Per prima cosa definiamo una "Classe" che ci permetta di rappresentare in forma astratta una delle nostre bolle con operazione. Nell'ottica di strutturare meglio il codice creiamo dentro la directory `src/js` un nuovo file `bubble.js` e scriviamoci all'interno il seguente codice:
+
+
+```javascript
+// bubble.js
+export default class Bubble {
+
+    constructor(bubbleColor, textColor, font, radius, sizeCanvas_x, sizeCanvas_y) {
+        this.center_x = 0;
+        this.center_y = 0;
+        this.radius = radius;
+        this.bubbleColor = bubbleColor;
+        this.textColor = textColor;
+        this.addends = [0, 0];
+        this.opString = "";
+        this.result = 0;
+        this.textFont = font;
+        this.sizeCanvas_x = 0;
+        this.sizeCanvas_y = 0;
+        this.speed = 0;
+
+        // salva la dimensione del canvas (ci servira' in seguito)
+        this.sizeCanvas_x = sizeCanvas_x;
+        this.sizeCanvas_y = sizeCanvas_y;
+
+        // inizializza la bolla
+        this.init();
+    }
+
+    init() {
+
+        // calcola una posizione casuale per la bolla
+        // posizione x casuale tra [0 + radius] e [sizeCanvas_x - radius]
+        // posizione y = -radius
+        this.center_x = Math.floor(Math.random() * (this.sizeCanvas_x - 2 * this.radius)) + this.radius;
+        this.center_y = -this.radius;
+
+        // calcola due addendi casuali tra 1 e 9, salva il risultato dell'operazione
+        // e prepara un stringa con l'operazione
+        this.addends[0] = Math.ceil(Math.random() * 9);
+        this.addends[1] = Math.ceil(Math.random() * 9);
+        this.result = this.addends[0] + this.addends[1];
+        this.opString = `${this.addends[0]} + ${this.addends[1]}`;
+
+        // regola la velocita' casualmente tra 1 e 5
+        this.speed = Math.ceil(Math.random() * 5);
+
+        console.log(`Bolla generata. Centro = [${this.center_x},${this.center_y}], velocità = ${this.speed}. Risultato = ${this.result}`);
+
+    }
+
+    computeResult() {
+        this.result = 0;
+        for (i = 0; i < this.addends.number; i++) {
+            this.result += addends[i];
+        }
+    }
+
+    moveDownAndDraw(ctx) {
+
+        this.center_y += this.speed;
+
+        ctx.beginPath();
+        ctx.strokeStyle = this.bubbleColor;
+        ctx.fillStyle = this.bubbleColor;
+        ctx.arc(this.center_x, this.center_y, this.radius, 0, 2 * Math.PI, false);
+        ctx.fill();
+        ctx.stroke();
+        ctx.font = this.textFont;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = this.textColor;
+        ctx.fillText(this.opString, this.center_x, this.center_y);
+
+        // se la bolla ha raggiunto il fondo, ne reinizializziamo una nuova
+        if (this.center_y > this.sizeCanvas_y)
+            this.init(this.sizeCanvas_x, this.sizeCanvas_y);
+
+    }
+}
+```
+
+Adesso tutto il codice che ci permette di rappresentare la bolla è contenuto in questo file (e sarà molto più facile estendere il nostro programma nel seguito, per esempio se volessimo far scendere più di una bolla per volta), e nel file principale `main.js` rimane solo il seguente codice:
+
+```javascript
+// main.js
+import '../style.css';
+import Bubble from './bubble.js';
+
+const base03color  = '#002b36';
+const base02color  = '#073642';
+const base01color  = '#586e75';
+const base00color  = '#657b83';
+const base0color   = '#839496';
+const base1color   = '#93a1a1';
+const base2color   = '#eee8d5';
+const base3color   = '#fdf6e3';
+const yellowcolor  = '#b58900';
+const orangecolor  = '#cb4b16';
+const redcolor     = '#dc322f';
+const magentacolor = '#d33682';
+const violetcolor  = '#6c71c4';
+const bluecolor    = '#268bd2';
+const cyancolor    = '#2aa198';
+const greencolor   = '#859900';
+
+var canvas = document.getElementById('tuxmathcanvas');
+var ctx = canvas.getContext('2d');
+
+// dichiariamo una bolla
+var bubble = new Bubble(redcolor, base02color,
+    '25px Verdana', 50, canvas.width, canvas.height);
+
+// funzione chiamata periodicamente
+setInterval(function() {
+
+    // ripuliamo il canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.rect(0,0,canvas.width,canvas.height, base3color);
+    ctx.fillStyle = base3color;
+    ctx.fill();
+    ctx.stroke();
+
+    // ridisegniamo la bolla facendola scendere di un passo
+    bubble.moveDownAndDraw(ctx);
+
+}, 10);
+```
+
+## Leggere input da tastiera
+
+**TO BE COMPLETED**
+
+## Controllare se abbiamo indovinato il risultato e aggiornamento del punteggio
+
+**TO BE COMPLETED**
 
 
 

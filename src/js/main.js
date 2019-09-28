@@ -1,4 +1,5 @@
 import '../style.css';
+import Bubble from './bubble.js';
 
 const base03color  = '#002b36';
 const base02color  = '#073642';
@@ -19,17 +20,12 @@ const greencolor   = '#859900';
 
 var canvas = document.getElementById('tuxmathcanvas');
 var ctx = canvas.getContext('2d');
-var circlecolor = redcolor;
-var textcolor = base02color;
-ctx.font = '25px Verdana';
-ctx.textAlign = 'center';
-ctx.textBaseline = 'middle';
 
-var center_x = 150;
-var center_y = -50;
-var op = '4 + 5';
-var txtwidth = ctx.measureText(op).width
+// dichiariamo una bolla
+var bubble = new Bubble(redcolor, base02color,
+    '25px Verdana', 50, canvas.width, canvas.height);
 
+// funzione chiamata periodicamente
 setInterval(function() {
 
     // ripuliamo il canvas
@@ -40,18 +36,7 @@ setInterval(function() {
     ctx.fill();
     ctx.stroke();
 
-    // ridisegniamo il tutto
-    ctx.beginPath();
-    ctx.strokeStyle = circlecolor;
-    ctx.fillStyle = circlecolor;
-    ctx.arc(center_x, center_y, 50, 0, 2 * Math.PI, false);
-    ctx.fill();
-    ctx.stroke();
-    ctx.fillStyle = textcolor;
-    ctx.fillText(op, center_x, center_y);
-
-    // calcoliamo la nuova posizione che verrà utilizzata al prossimo ciclo
-    center_y += 1;
-
+    // ridisegniamo la bolla facendola scendere di un passo
+    bubble.moveDownAndDraw(ctx);
 
 }, 10);
