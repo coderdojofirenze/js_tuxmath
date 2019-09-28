@@ -107,8 +107,6 @@ E le seguenti righe alla fine del file `style.css`:
 
 ```css
 #tuxmathcanvas {
-	width: 400px;
-	height: 600px;
 	border-width: 7px;
 	border-style: solid;
 	border-color: var(--solar-base3-color);
