@@ -225,7 +225,7 @@ var op = '4 + 5';    // <<< riga spostata>>>
 var txtwidth = ctx.measureText(op).width   // <<< riga spostata >>>
 ```
 
-Spostiamo quindi il codice che disegna bolla e testo dentro la funzione `setInterval()` aggiungendoci anche una sezione che ripulisce il canvas a ogni iterazione e la riga che modifica il valore di `center_x` in modo ad ogni iterazione gli oggetti vengano disegnati un po' più in basso.
+Spostiamo quindi il codice che disegna bolla e testo dentro la funzione `setInterval()` aggiungendoci anche una sezione che ripulisce il canvas a ogni iterazione e la riga che modifica il valore di `center_y` in modo ad ogni iterazione gli oggetti vengano disegnati un po' più in basso.
 
 Alla fine di tutte queste operazioni il nostro codice (a parte le righe iniziali con la definizione dei colori che rimangono uguali) sarà diventato il seguente:
 
